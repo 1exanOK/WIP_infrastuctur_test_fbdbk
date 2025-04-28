@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: cr.yandex/<registry-id>/frontend:latest
+        image: cr.yandex/crp4rlsckt8co5vc0rpu/frontend:latest
         ports:
         - containerPort: 80
 ---

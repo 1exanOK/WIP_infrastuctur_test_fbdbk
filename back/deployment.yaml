@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: cr.yandex/<registry-id>/backend:latest
+        image: cr.yandex/crp4rlsckt8co5vc0rpu/backend:latest
         ports:
         - containerPort: 3000
         env:
