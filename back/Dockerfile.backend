@@ -1,0 +1,16 @@
+FROM node:18-alpine
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Установка утилиты для проверки доступности БД
+RUN apk add --no-cache postgresql-client
+
+COPY wait-for-pg.sh /wait-for-pg.sh
+RUN chmod +x /wait-for-pg.sh
+
+EXPOSE 3000
+
+CMD ["/wait-for-pg.sh", "node", "server.js"]

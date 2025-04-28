@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: marketplace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: cr.yandex/<registry-id>/backend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: "rc1a-xxxxx.mdb.yandexcloud.net"
+        - name: DB_PORT
+          value: "6432"
+        - name: DB_USER
+          value: "admin"
+        - name: DB_NAME
+          value: "marketplace"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: marketplace
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
